@@ -1,5 +1,5 @@
 "
-" Minimal Tabline 
+" Minimal Tabline
 "
 function! s:tablabel(bufnr) abort
     let bufname = bufname(a:bufnr)
@@ -15,6 +15,7 @@ function! s:tablabel(bufnr) abort
       let bufname .= " " .. WebDevIconsGetFileTypeSymbol(bufname)
     endif
 
+    " 'No Name' won't be used if vim-devicons is installed.
     return (bufname != '' ? '' .. fnamemodify(bufname, ':t') .. ' ' : 'No Name ')
 endfunction
 
