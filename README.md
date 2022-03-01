@@ -25,6 +25,19 @@ Plug 'ryanoasis/vim-devicons'
 
 Please follow the installation guide of [vim-devicons](https://github.com/ryanoasis/vim-devicons#installation) if icons don't show up.
 
+Tip
+===
+
+You can use a simple vimscript to configure mappings to select tabs.
+
+For example, the script below enables `Number + ,` to select a tab, i.e. type `1,` to select the first tab.
+
+```vim
+for i in range(1, 9)
+  exec 'nnoremap ' .. i .. ', ' .. i .. 'gt'
+endfor
+```
+
 License
 ===
 
