@@ -25,7 +25,7 @@ Plug 'ryanoasis/vim-devicons'
 
 Please follow the installation guide of [vim-devicons](https://github.com/ryanoasis/vim-devicons#installation) if icons don't show up.
 
-Configuration
+Configuration tip
 ===
 
 A simple vimscript can be used to configure mappings to select tabs.
