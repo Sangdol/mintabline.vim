@@ -1,7 +1,11 @@
-Mintabline: Minimal Tabline
+Mintabline
 ===
 
+Minimalist Tabline
+
 ![mintabline screenshot](/screenshots/mintabline.png)
+
+This project is inspired by [tabline](https://github.com/Sangdol/tabline.vim).
 
 Features
 ---
@@ -10,15 +14,13 @@ Features
 * Shows the directory name of Neovim terminal buffers.
 * Shows icons using [vim-devicons](https://github.com/ryanoasis/vim-devicons).
 
-This project is inspired by [tabline](https://github.com/Sangdol/tabline.vim)
-
 Installation
 ---
 
 Use your favorite vim plugin management tool, e.g., [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
-Plug 'sangdol/mintabline'
+Plug 'sangdol/mintabline.vim'
 
 " Optional to add icons
 Plug 'ryanoasis/vim-devicons'
