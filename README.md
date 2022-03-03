@@ -3,7 +3,8 @@ Mintabline: Minimal Tabline
 
 ![mintabline screenshot](/screenshots/mintabline.png)
 
-### Features
+Features
+---
 
 * Shows minimal characters with tab numbers.
 * Shows the directory name of Neovim terminal buffers.
@@ -12,7 +13,7 @@ Mintabline: Minimal Tabline
 This project is inspired by [tabline](https://github.com/Sangdol/tabline.vim)
 
 Installation
-===
+---
 
 Use your favorite vim plugin management tool, e.g., [vim-plug](https://github.com/junegunn/vim-plug)
 
@@ -26,7 +27,7 @@ Plug 'ryanoasis/vim-devicons'
 Please follow the installation guide of [vim-devicons](https://github.com/ryanoasis/vim-devicons#installation) if icons don't show up.
 
 Configuration tip
-===
+---
 
 A simple vimscript can be used to configure mappings to select tabs.
 
@@ -39,7 +40,7 @@ endfor
 ```
 
 License
-===
+---
 
 MIT
 
