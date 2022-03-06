@@ -28,6 +28,15 @@ Plug 'ryanoasis/vim-devicons'
 
 Please follow the installation guide of [vim-devicons](https://github.com/ryanoasis/vim-devicons#installation) if icons don't show up.
 
+### vim-devicons configuration
+
+If you want to show a folder icon regardless of a directory name instead of showing a name specific icon, for example, a vim icon for a `vimrc` directory, you need to set `g:DevIconsEnableFolderPatternMatching` to `0` which is `1` by default.
+
+```vim
+" Always show a folder icon for a terminal directory buffer.
+let g:DevIconsEnableFolderPatternMatching = 0
+```
+
 Configuration tip
 ---
 
