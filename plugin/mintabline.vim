@@ -6,15 +6,25 @@ function! s:tablabel(bufnr) abort
 
     " For Neovim terminal
     " `b:term_title` has a path and a shell name e.g, '~/folder-name - fish'
-    let isdir = 0
     let term_title = getbufvar(a:bufnr, 'term_title')
-    if stridx(term_title, ' - ') >= 0
-      let isdir = 1
+    let is_term = stridx(term_title, ' - ') >= 0
+    let icon = ''
+    if is_term
+      let icon = ''
       let bufname = split(term_title, ' - ')[0]
+    else
+      if has('nvim') 
+        let icon = luaeval("require('deviconutil').get_icon(_A)", bufname)
+      else
+        if exists('*WebDevIconsGetFileTypeSymbol')
+          let icon = WebDevIconsGetFileTypeSymbol(bufname)
+        endif
+      endif
     endif
 
-    if exists('*WebDevIconsGetFileTypeSymbol')  " support for vim-devicons
-      let bufname .= " " .. WebDevIconsGetFileTypeSymbol(bufname, isdir)
+    " vim-devicons
+    if icon != ''
+      let bufname .= ' ' .. icon
     endif
 
     " 'No Name' won't be used if vim-devicons is installed.
