@@ -1,34 +1,54 @@
 "
 " Minimal Tabline
 "
-function! s:tablabel(bufnr) abort
-    let bufname = bufname(a:bufnr)
 
-    " For Neovim terminal
-    " `b:term_title` has a path and a shell name e.g, '~/folder-name - fish'
-    let term_title = getbufvar(a:bufnr, 'term_title')
-    let is_term = stridx(term_title, ' - ') >= 0
+function! s:bufname(bufnr, is_term)
+    let bufname = bufname(a:bufnr)
+    if a:is_term
+      " For Neovim terminal
+      " `b:term_title` has a path and a shell name e.g, '~/folder-name - fish'
+      let term_title = getbufvar(a:bufnr, 'term_title')
+      if stridx(term_title, ' - ') >= 0
+        let bufname = split(term_title, ' - ')[0]
+      endif
+    endif
+
+    return bufname
+endfunction
+
+function! s:icon(bufname, is_term) abort
     let icon = ''
-    if is_term
+    if a:is_term
       let icon = ''
-      let bufname = split(term_title, ' - ')[0]
     else
       if has('nvim') 
-        let icon = luaeval("require('deviconutil').get_icon(_A)", bufname)
+        let icon = luaeval("require('deviconutil').get_icon(_A)", a:bufname)
       else
         if exists('*WebDevIconsGetFileTypeSymbol')
-          let icon = WebDevIconsGetFileTypeSymbol(bufname)
+          let icon = WebDevIconsGetFileTypeSymbol(a:bufname)
         endif
       endif
     endif
 
-    " vim-devicons
-    if icon != ''
-      let bufname .= ' ' .. icon
+    return icon
+endfunction
+
+function! s:tablabel(bufnr) abort
+    let is_term = getbufvar(a:bufnr, '&buftype') == 'terminal'
+    let bufname = s:bufname(a:bufnr, is_term)
+    let icon = s:icon(bufname, is_term)
+
+    if bufname != '' && icon != ''
+      let label = bufname .. ' ' .. icon
+    elseif bufname != '' && icon == ''
+      let label = bufname 
+    elseif bufname == '' && icon != ''
+      let label = icon 
+    else
+      let label = 'No Name'
     endif
 
-    " 'No Name' won't be used if vim-devicons is installed.
-    return (bufname != '' ? '' .. fnamemodify(bufname, ':t') .. ' ' : 'No Name ')
+    return label .. ' '
 endfunction
 
 function! s:bufmodified(bufnr) abort
