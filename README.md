@@ -3,7 +3,7 @@ Mintabline
 
 Minimalist Tabline
 
-![mintabline screenshot](/screenshots/mintabline.png)
+![mintabline screenshot](/screenshots/mintablinev2.png)
 
 This project is inspired by [tabline](https://github.com/Sangdol/tabline.vim).
 
@@ -12,7 +12,7 @@ Features
 
 * Shows minimal characters with tab numbers.
 * Shows the directory name of Neovim terminal buffers.
-* Shows icons using [vim-devicons](https://github.com/ryanoasis/vim-devicons).
+* Shows icons using [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
 
 Installation
 ---
@@ -21,21 +21,21 @@ Use your favorite vim plugin management tool, e.g., [vim-plug](https://github.co
 
 ```vim
 Plug 'sangdol/mintabline.vim'
+```
 
-" Optional to add icons
+### devicons
+
+You can add icons with [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
+
+If both plugins exist `nvim-web-devicons` takes precedence.
+
+```vim
+" Optionally add one of these
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 ```
 
-Please follow the installation guide of [vim-devicons](https://github.com/ryanoasis/vim-devicons#installation) if icons don't show up.
-
-### vim-devicons configuration
-
-If you want to show a folder icon regardless of a directory name instead of showing a name specific icon, for example, a vim icon for a `vimrc` directory, you need to set `g:DevIconsEnableFolderPatternMatching` to `0` which is `1` by default.
-
-```vim
-" Always show a folder icon for a terminal directory buffer.
-let g:DevIconsEnableFolderPatternMatching = 0
-```
+Please follow the installation guide of the plugins if icons don't show up.
 
 Configuration tip
 ---
