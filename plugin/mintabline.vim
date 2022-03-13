@@ -19,7 +19,7 @@ endfunction
 function! s:icon(bufname, is_term) abort
     let icon = ''
 
-    if has('nvim') 
+    if has('nvim')
       let icon = luaeval("require('deviconutil').get_icon(_A)", a:bufname)
     else
       if exists('*WebDevIconsGetFileTypeSymbol')
@@ -34,22 +34,26 @@ function! s:icon(bufname, is_term) abort
     return icon
 endfunction
 
-function! s:tablabel(bufnr) abort
-    let is_term = getbufvar(a:bufnr, '&buftype') == 'terminal'
-    let bufname = s:bufname(a:bufnr, is_term)
-    let icon = s:icon(bufname, is_term)
-
-    if bufname != '' && icon != ''
-      let label = bufname .. ' ' .. icon
-    elseif bufname != '' && icon == ''
-      let label = bufname 
-    elseif bufname == '' && icon != ''
-      let label = icon 
+function! s:mergedlabel(bufname, icon) abort
+    if a:bufname != '' && a:icon != ''
+      let label = a:bufname .. ' ' .. a:icon
+    elseif a:bufname != '' && a:icon == ''
+      let label = a:bufname
+    elseif a:bufname == '' && a:icon != ''
+      let label = a:icon
     else
       let label = 'No Name'
     endif
 
     return label .. ' '
+endfunction
+
+function! s:tablabel(bufnr) abort
+    let is_term = getbufvar(a:bufnr, '&buftype') == 'terminal'
+    let bufname = s:bufname(a:bufnr, is_term)
+    let icon = s:icon(bufname, is_term)
+
+    return s:mergedlabel(bufname, icon)
 endfunction
 
 function! s:bufmodified(bufnr) abort
