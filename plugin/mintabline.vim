@@ -2,7 +2,7 @@
 " Minimal Tabline
 "
 
-function! s:bufname(bufnr, is_term)
+function! s:bufname(bufnr, is_term) abort
     let bufname = bufname(a:bufnr)
     if a:is_term
       " For Neovim terminal
