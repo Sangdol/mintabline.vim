@@ -18,16 +18,17 @@ endfunction
 
 function! s:icon(bufname, is_term) abort
     let icon = ''
-    if a:is_term
-      let icon = ''
+
+    if has('nvim') 
+      let icon = luaeval("require('deviconutil').get_icon(_A)", a:bufname)
     else
-      if has('nvim') 
-        let icon = luaeval("require('deviconutil').get_icon(_A)", a:bufname)
-      else
-        if exists('*WebDevIconsGetFileTypeSymbol')
-          let icon = WebDevIconsGetFileTypeSymbol(a:bufname)
-        endif
+      if exists('*WebDevIconsGetFileTypeSymbol')
+        let icon = WebDevIconsGetFileTypeSymbol(a:bufname)
       endif
+    endif
+
+    if icon != '' && a:is_term
+      let icon = ''
     endif
 
     return icon
