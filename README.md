@@ -3,7 +3,7 @@ Mintabline
 
 Minimalist Tabline
 
-![mintabline screenshot](/screenshots/mintabline.png)
+![mintabline screenshot](/screenshots/mintablinev2.png)
 
 This project is inspired by [tabline](https://github.com/Sangdol/tabline.vim).
 
