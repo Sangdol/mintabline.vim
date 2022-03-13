@@ -35,12 +35,15 @@ function! s:icon(bufname, is_term) abort
 endfunction
 
 function! s:mergedlabel(bufname, icon) abort
-    if a:bufname != '' && a:icon != ''
-      let label = a:bufname .. ' ' .. a:icon
-    elseif a:bufname != '' && a:icon == ''
-      let label = a:bufname
-    elseif a:bufname == '' && a:icon != ''
-      let label = a:icon
+    let bufname = fnamemodify(a:bufname, ':t')
+    let icon = a:icon
+
+    if bufname != '' && icon != ''
+      let label = bufname .. ' ' .. icon
+    elseif bufname != '' && icon == ''
+      let label = bufname
+    elseif bufname == '' && icon != ''
+      let label = icon
     else
       let label = 'No Name'
     endif
