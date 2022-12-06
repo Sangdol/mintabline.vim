@@ -37,7 +37,7 @@ Plug 'ryanoasis/vim-devicons'
 
 Please follow the installation guide of the plugins if icons don't show up.
 
-Configuration 
+Configuration
 ---
 
 ### `g:mintabline_tab_max_chars`
@@ -53,6 +53,18 @@ This will cut the long tab names appending ellipsis.
 ![mintabline_tab_max_chars screenshot](/screenshots/mintabline_tab_max_chars.png)
 
 The full name will be shown when the tab is active.
+
+### Tip: accessing tabs with keymaps
+
+A simple vimscript can be used to configure mappings to select tabs.
+
+For example, the script below enables `Number + ,` to select a tab, i.e. type `1,` to select the first tab.
+
+```vim
+for i in range(1, 9)
+  exec 'nnoremap ' .. i .. ', ' .. i .. 'gt'
+endfor
+```
 
 License
 ---
