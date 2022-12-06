@@ -42,23 +42,25 @@ Configuration
 
 ### `g:mintabline_tab_max_chars`
 
-You can set the tab name maximum length with `g:mintabline_tab_max_chars`, for example,
+You can set the maximum length of tab names with `g:mintabline_tab_max_chars`. 
+
+For example,
 
 ```vim
 let g:mintabline_tab_max_chars = 15
 ```
 
-This will cut the long tab names appending ellipsis.
+This will cut tab names longer than 15 characters appending an ellipsis.
 
 ![mintabline_tab_max_chars screenshot](/screenshots/mintabline_tab_max_chars.png)
 
-The full name will be shown when the tab is active.
+The full name will be shown when a tab is active.
 
 ### Tip: accessing tabs with keymaps
 
-A simple vimscript can be used to configure mappings to select tabs.
+A simple vimscript can be used to configure keymaps to select tabs.
 
-For example, the script below enables `Number + ,` to select a tab, i.e. type `1,` to select the first tab.
+For example, the script below enables `Number + ,` to select a tab, i.e. you can type `1,` to select the first tab.
 
 ```vim
 for i in range(1, 9)
