@@ -32,7 +32,7 @@ If both plugins exist `nvim-web-devicons` takes precedence.
 
 ```vim
 " Optionally add one of these
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'nvim-tree/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 ```
 
