@@ -13,6 +13,7 @@ Features
 * Shows minimal characters with tab numbers.
 * Shows the directory name of Neovim terminal buffers.
 * Shows icons using [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
+* Enables you to configure maximum tab name length
 
 Installation
 ---
@@ -42,7 +43,7 @@ Configuration
 
 ### `g:mintabline_tab_max_chars`
 
-You can set the maximum length of tab names with `g:mintabline_tab_max_chars`. 
+You can set the maximum length of tab names with `g:mintabline_tab_max_chars`.
 
 For example,
 
