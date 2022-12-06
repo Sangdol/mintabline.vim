@@ -4,7 +4,6 @@
 
 function! s:bufname(bufnr, is_term, is_active_tab) abort
     let bufname = bufname(a:bufnr)
-    let bufname = fnamemodify(bufname, ':t')
     if a:is_term
       " For Neovim terminal
       " `b:term_title` has a path and a shell name e.g, '~/folder-name - fish'
@@ -14,9 +13,10 @@ function! s:bufname(bufnr, is_term, is_active_tab) abort
       endif
     endif
 
-    if !a:is_active_tab 
-          \ && exists('g:mintabline_tab_max_chars') 
-          \ && len(bufname) > g:mintabline_tab_max_chars 
+    let bufname = fnamemodify(bufname, ':t')
+    if !a:is_active_tab
+          \ && exists('g:mintabline_tab_max_chars')
+          \ && len(bufname) > g:mintabline_tab_max_chars
       let bufname = strpart(bufname, 0, g:mintabline_tab_max_chars) . '…'
     endif
 
@@ -38,7 +38,7 @@ function! s:icon(bufname, is_term) abort
       let icon = ''
     endif
 
-    return icon 
+    return icon
 endfunction
 
 function! s:mergedlabel(bufname, icon) abort
