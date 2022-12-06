@@ -2,7 +2,7 @@
 " Minimal Tabline
 "
 
-function! s:bufname(bufnr, is_term) abort
+function! s:bufname(bufnr, is_term, is_active_tab) abort
     let bufname = bufname(a:bufnr)
     if a:is_term
       " For Neovim terminal
@@ -11,6 +11,13 @@ function! s:bufname(bufnr, is_term) abort
       if stridx(term_title, ' - ') >= 0
         let bufname = split(term_title, ' - ')[0]
       endif
+    endif
+
+    let bufname = fnamemodify(bufname, ':t')
+    if !a:is_active_tab
+          \ && exists('g:mintabline_tab_max_chars')
+          \ && len(bufname) > g:mintabline_tab_max_chars
+      let bufname = strpart(bufname, 0, g:mintabline_tab_max_chars) . '…'
     endif
 
     return bufname
@@ -35,7 +42,7 @@ function! s:icon(bufname, is_term) abort
 endfunction
 
 function! s:mergedlabel(bufname, icon) abort
-    let bufname = fnamemodify(a:bufname, ':t')
+  let bufname = a:bufname
     let icon = a:icon
 
     if bufname != '' && icon != ''
@@ -51,9 +58,9 @@ function! s:mergedlabel(bufname, icon) abort
     return label .. ' '
 endfunction
 
-function! s:tablabel(bufnr) abort
+function! s:tablabel(bufnr, is_active_tab) abort
     let is_term = getbufvar(a:bufnr, '&buftype') == 'terminal'
-    let bufname = s:bufname(a:bufnr, is_term)
+    let bufname = s:bufname(a:bufnr, is_term, a:is_active_tab)
     let icon = s:icon(bufname, is_term)
 
     return s:mergedlabel(bufname, icon)
@@ -72,10 +79,11 @@ function! mintabline#main() abort
     let buflist = tabpagebuflist(tabnr)
     let bufnr = buflist[winnr - 1]
 
+    let is_active_tab = tabnr == tabpagenr()
     let line .= '%' .. tabnr .. 'T' " tab number for mouse click
-    let line .= (tabnr == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#') " for highlighting
+    let line .= (is_active_tab ? '%#TabLineSel#' : '%#TabLine#') " for highlighting
     let line .= ' ' .. tabnr ..' '
-    let line .= s:tablabel(bufnr)
+    let line .= s:tablabel(bufnr, is_active_tab)
     let line .= s:bufmodified(bufnr)
   endfor
 
