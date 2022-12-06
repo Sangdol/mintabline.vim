@@ -60,8 +60,9 @@ endfunction
 
 function! s:tablabel(bufnr, is_active_tab) abort
     let is_term = getbufvar(a:bufnr, '&buftype') == 'terminal'
+    let original_bufname = bufname(a:bufnr)
+    let icon = s:icon(original_bufname, is_term)
     let bufname = s:bufname(a:bufnr, is_term, a:is_active_tab)
-    let icon = s:icon(bufname, is_term)
 
     return s:mergedlabel(bufname, icon)
 endfunction
