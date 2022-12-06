@@ -3,7 +3,7 @@ Mintabline
 
 Minimalist Tabline
 
-![mintabline screenshot](/screenshots/mintablinev2.png)
+![mintabline screenshot](/screenshots/mintablinev3.png)
 
 This project is inspired by [tabline](https://github.com/Sangdol/tabline.vim).
 
@@ -50,10 +50,6 @@ For example,
 ```vim
 let g:mintabline_tab_max_chars = 15
 ```
-
-This will cut tab names longer than 15 characters appending an ellipsis.
-
-![mintabline_tab_max_chars screenshot](/screenshots/mintabline_tab_max_chars.png)
 
 The full name will be shown when a tab is active.
 
