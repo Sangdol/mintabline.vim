@@ -101,7 +101,7 @@ function! mintabline#main() abort
   endfor
 
   " Safety counter to prevent infinite loop
-  let max_iterations = len(tabs)
+  let max_iterations = len(tabs) - 1
   let iteration_count = 0
 
   let is_left_truncated = v:false
