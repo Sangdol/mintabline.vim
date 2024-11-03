@@ -2,6 +2,9 @@
 " Minimal Tabline
 "
 
+let g:ellipsis = '…'
+
+" Returns the buffer name
 function! s:bufname(bufnr, is_term, is_active_tab) abort
     let bufname = bufname(a:bufnr)
     if a:is_term
@@ -17,12 +20,13 @@ function! s:bufname(bufnr, is_term, is_active_tab) abort
     if !a:is_active_tab
           \ && exists('g:mintabline_tab_max_chars')
           \ && len(bufname) > g:mintabline_tab_max_chars
-      let bufname = strpart(bufname, 0, g:mintabline_tab_max_chars) . '…'
+      let bufname = strpart(bufname, 0, g:mintabline_tab_max_chars) . g:ellipsis
     endif
 
     return bufname
 endfunction
 
+" Returns the icon for the buffer
 function! s:icon(bufname, is_term) abort
     let icon = ''
 
@@ -41,6 +45,7 @@ function! s:icon(bufname, is_term) abort
     return icon
 endfunction
 
+" Merges the buffer name and icon
 function! s:mergedlabel(bufname, icon) abort
   let bufname = a:bufname
     let icon = a:icon
@@ -58,6 +63,7 @@ function! s:mergedlabel(bufname, icon) abort
     return label .. ' '
 endfunction
 
+" Returns the tab label
 function! s:tablabel(bufnr, is_active_tab) abort
     let is_term = getbufvar(a:bufnr, '&buftype') == 'terminal'
     let original_bufname = bufname(a:bufnr)
@@ -72,8 +78,10 @@ function! s:bufmodified(bufnr) abort
 endfunction
 
 function! mintabline#main() abort
-  let line = ''
+  let tabs = []
+  let raw_tabs = [] " To calculate tabline length without highlighting
 
+  " Populate the tabs array with each tab's formatted string
   for i in range(tabpagenr('$'))
     let tabnr = i + 1
     let winnr = tabpagewinnr(tabnr)
@@ -81,12 +89,53 @@ function! mintabline#main() abort
     let bufnr = buflist[winnr - 1]
 
     let is_active_tab = tabnr == tabpagenr()
-    let line .= '%' .. tabnr .. 'T' " tab number for mouse click
-    let line .= (is_active_tab ? '%#TabLineSel#' : '%#TabLine#') " for highlighting
-    let line .= ' ' .. tabnr ..' '
-    let line .= s:tablabel(bufnr, is_active_tab)
-    let line .= s:bufmodified(bufnr)
+    let tab = '%' .. tabnr .. 'T'  " Tab number for mouse click
+    let tab .= (is_active_tab ? '%#TabLineSel#' : '%#TabLine#')  " Highlighting
+    let tab .= ' ' .. tabnr .. ' '
+    let tab .= s:tablabel(bufnr, is_active_tab)
+    let tab .= s:bufmodified(bufnr)
+
+    let raw_tab = ' ' .. tabnr .. ' ' . s:tablabel(bufnr, is_active_tab) . s:bufmodified(bufnr)
+    call add(tabs, tab)
+    call add(raw_tabs, raw_tab)
   endfor
+
+  " Safety counter to prevent infinite loop
+  let max_iterations = len(tabs) - 1
+  let iteration_count = 0
+
+  let is_left_truncated = v:false
+  let is_right_truncated = v:false
+  let window_width = &columns
+  let active_tab_index = tabpagenr() - 1
+
+  " Truncate tabs to fit window width
+  while window_width < strchars(join(raw_tabs, '')) 
+    if iteration_count >= max_iterations
+      break
+    endif
+    let should_remove_left = active_tab_index > len(tabs) / 2
+    if should_remove_left
+      call remove(tabs, 0)
+      call remove(raw_tabs, 0)
+      let active_tab_index -= 1
+      let is_left_truncated = v:true
+    else
+      call remove(tabs, -1)
+      call remove(raw_tabs, -1)
+      let is_right_truncated = v:true
+    endif
+    let iteration_count += 1
+  endwhile
+
+  " Concatenate tabs with ellipsis if truncated
+  let line = join(tabs, '')
+  if is_left_truncated
+    let line = g:ellipsis .. line
+  endif
+  if is_right_truncated
+    let line = line .. g:ellipsis
+  endif
 
   let line .= '%#TabLineFill#'
 
@@ -94,4 +143,3 @@ function! mintabline#main() abort
 endfunction
 
 set tabline=%!mintabline#main()
-
