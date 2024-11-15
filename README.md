@@ -14,6 +14,7 @@ Features
 * Shows the directory name of Neovim terminal buffers.
 * Shows icons using [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
 * Enables you to configure maximum tab name length
+* Enables you to label tabs with a custom prefix
 
 Installation
 ---
@@ -52,6 +53,20 @@ let g:mintabline_tab_max_chars = 15
 ```
 
 The full name will be shown when a tab is active.
+
+Usage
+---
+
+### Tab labels
+
+By default the tab name is drawn from the active buffer in that tab. You can set a custom prefix on the tab by setting the tab-local variable
+`t:tab_label`
+
+A simple command to change the label is 
+
+```vim
+command! -nargs=* Tablabel let t:tab_label=<q-args> | redrawtabline
+```
 
 ### Tip: accessing tabs with keymaps
 
