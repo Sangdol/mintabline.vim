@@ -5,7 +5,7 @@
 let g:ellipsis = '…'
 
 " Returns the buffer name
-function! s:bufname(bufnr, is_term, is_active_tab) abort
+function! s:bufname(tabnr, bufnr, is_term, is_active_tab) abort
     let bufname = bufname(a:bufnr)
     if a:is_term
       " For Neovim terminal
@@ -17,6 +17,9 @@ function! s:bufname(bufnr, is_term, is_active_tab) abort
     endif
 
     let bufname = fnamemodify(bufname, ':t')
+    let label = gettabvar(a:tabnr, "tab_label", "")
+    let bufname = (label == "" ? "" : (label . ":")) . bufname 
+
     if !a:is_active_tab
           \ && exists('g:mintabline_tab_max_chars')
           \ && len(bufname) > g:mintabline_tab_max_chars
@@ -64,11 +67,11 @@ function! s:mergedlabel(bufname, icon) abort
 endfunction
 
 " Returns the tab label
-function! s:tablabel(bufnr, is_active_tab) abort
+function! s:tablabel(tabnr, bufnr, is_active_tab) abort
     let is_term = getbufvar(a:bufnr, '&buftype') == 'terminal'
     let original_bufname = bufname(a:bufnr)
     let icon = s:icon(original_bufname, is_term)
-    let bufname = s:bufname(a:bufnr, is_term, a:is_active_tab)
+    let bufname = s:bufname(a:tabnr, a:bufnr, is_term, a:is_active_tab)
 
     return s:mergedlabel(bufname, icon)
 endfunction
@@ -92,10 +95,10 @@ function! mintabline#main() abort
     let tab = '%' .. tabnr .. 'T'  " Tab number for mouse click
     let tab .= (is_active_tab ? '%#TabLineSel#' : '%#TabLine#')  " Highlighting
     let tab .= ' ' .. tabnr .. ' '
-    let tab .= s:tablabel(bufnr, is_active_tab)
+    let tab .= s:tablabel(tabnr, bufnr, is_active_tab)
     let tab .= s:bufmodified(bufnr)
 
-    let raw_tab = ' ' .. tabnr .. ' ' . s:tablabel(bufnr, is_active_tab) . s:bufmodified(bufnr)
+    let raw_tab = ' ' .. tabnr .. ' ' . s:tablabel(tabnr, bufnr, is_active_tab) . s:bufmodified(bufnr)
     call add(tabs, tab)
     call add(raw_tabs, raw_tab)
   endfor
