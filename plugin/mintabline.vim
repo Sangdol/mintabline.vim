@@ -99,6 +99,7 @@ function! mintabline#main() abort
     let tab .= s:bufmodified(bufnr)
 
     let raw_tab = ' ' .. tabnr .. ' ' . s:tablabel(tabnr, bufnr, is_active_tab) . s:bufmodified(bufnr)
+    let raw_tab = substitute(raw_tab, "%#[a-zA-Z]\\+#", "", "g")
     call add(tabs, tab)
     call add(raw_tabs, raw_tab)
   endfor
