@@ -18,7 +18,7 @@ function! s:bufname(tabnr, bufnr, is_term, is_active_tab) abort
 
     let bufname = fnamemodify(bufname, ':t')
     let label = gettabvar(a:tabnr, "tab_label", "")
-    let bufname = (label == "" ? "" : (label . ":")) . bufname 
+    let bufname = (label == "" ? "" : (label . ":")) . bufname
 
     if !a:is_active_tab
           \ && exists('g:mintabline_tab_max_chars')
@@ -30,11 +30,11 @@ function! s:bufname(tabnr, bufnr, is_term, is_active_tab) abort
 endfunction
 
 " Returns the icon for the buffer
-function! s:icon(bufname, is_term) abort
+function! s:icon(bufname, is_term, is_active_tab) abort
     let icon = ''
 
     if has('nvim')
-      let icon = luaeval("require('deviconutil').get_icon(_A)", a:bufname)
+      let icon = luaeval("require('deviconutil').get_icon(_A[1],_A[2])", [a:bufname, a:is_active_tab])
     else
       if exists('*WebDevIconsGetFileTypeSymbol')
         let icon = WebDevIconsGetFileTypeSymbol(a:bufname)
@@ -70,7 +70,7 @@ endfunction
 function! s:tablabel(tabnr, bufnr, is_active_tab) abort
     let is_term = getbufvar(a:bufnr, '&buftype') == 'terminal'
     let original_bufname = bufname(a:bufnr)
-    let icon = s:icon(original_bufname, is_term)
+    let icon = s:icon(original_bufname, is_term, a:is_active_tab)
     let bufname = s:bufname(a:tabnr, a:bufnr, is_term, a:is_active_tab)
 
     return s:mergedlabel(bufname, icon)
@@ -99,6 +99,7 @@ function! mintabline#main() abort
     let tab .= s:bufmodified(bufnr)
 
     let raw_tab = ' ' .. tabnr .. ' ' . s:tablabel(tabnr, bufnr, is_active_tab) . s:bufmodified(bufnr)
+    let raw_tab = substitute(raw_tab, "%#[a-zA-Z]\\+#", "", "g")
     call add(tabs, tab)
     call add(raw_tabs, raw_tab)
   endfor
@@ -113,7 +114,7 @@ function! mintabline#main() abort
   let active_tab_index = tabpagenr() - 1
 
   " Truncate tabs to fit window width
-  while window_width < strchars(join(raw_tabs, '')) 
+  while window_width < strchars(join(raw_tabs, ''))
     if iteration_count >= max_iterations
       break
     endif
