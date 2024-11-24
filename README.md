@@ -3,18 +3,19 @@ Mintabline
 
 Minimalist Tabline
 
-![mintabline screenshot](/screenshots/mintablinev3.png)
+![mintabline screenshot](/screenshots/mintablinev4.png)
 
 This project is inspired by [tabline](https://github.com/Sangdol/tabline.vim).
 
 Features
 ---
 
-* Shows minimal characters with tab numbers.
-* Shows the directory name of Neovim terminal buffers.
-* Shows icons using [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
-* Enables you to configure maximum tab name length
-* Enables you to label tabs with a custom prefix
+* Displays minimal characters with tab numbers.
+* Displays the directory name of Neovim terminal buffers.
+* Displays icons using [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
+* Allows configuration of the maximum tab name length.
+* Allows labeling tabs with a custom prefix.
+* Adjusts tab visibility dynamically based on the current window width.
 
 Installation
 ---
