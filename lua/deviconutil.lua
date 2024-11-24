@@ -9,7 +9,7 @@ function M.get_icon(bufname, is_selected)
   is_selected = is_selected ~= 0
   local loaded, webdev_icons = pcall(require, "nvim-web-devicons")
   if loaded then
-    icon, hlgroup = webdev_icons.get_icon(fn.fnamemodify(bufname, ":r"), fn.fnamemodify(bufname, ":e"), { default = true })
+    local icon, hlgroup = webdev_icons.get_icon(fn.fnamemodify(bufname, ":r"), fn.fnamemodify(bufname, ":e"), { default = true })
     hlgroup = M.get_hlgroup(hlgroup, is_selected)
     return '%#' .. hlgroup .. '#' .. icon
   end
