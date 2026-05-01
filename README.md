@@ -12,7 +12,7 @@ Features
 
 * Displays minimal characters with tab numbers.
 * Displays the directory name of Neovim terminal buffers.
-* Displays icons using [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
+* Displays icons using [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
 * Allows configuration of the maximum tab name length.
 * Allows labeling tabs with a custom prefix.
 * Adjusts tab visibility dynamically based on the current window width.
@@ -20,7 +20,7 @@ Features
 Installation
 ---
 
-Use your favorite vim plugin management tool, e.g., [vim-plug](https://github.com/junegunn/vim-plug)
+Use your favorite Vim plugin management tool, e.g., [vim-plug](https://github.com/junegunn/vim-plug):
 
 ```vim
 Plug 'sangdol/mintabline.vim'
@@ -28,17 +28,17 @@ Plug 'sangdol/mintabline.vim'
 
 ### devicons
 
-You can add icons with [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
+You can add icons with [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) or [vim-devicons](https://github.com/ryanoasis/vim-devicons).
 
-If both plugins exist `nvim-web-devicons` takes precedence.
+If both plugins are installed, `nvim-web-devicons` takes precedence.
 
 ```vim
-" Optionally add one of these
+" Optionally, add one of the following:
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 ```
 
-Please follow the installation guide of the plugins if icons don't show up.
+Please follow the installation guides for these plugins if icons do not appear.
 
 Configuration
 ---
@@ -47,7 +47,7 @@ Configuration
 
 You can set the maximum length of tab names with `g:mintabline_tab_max_chars`.
 
-For example,
+For example:
 
 ```vim
 let g:mintabline_tab_max_chars = 15
@@ -60,10 +60,9 @@ Usage
 
 ### Tab labels
 
-By default the tab name is drawn from the active buffer in that tab. You can set a custom prefix on the tab by setting the tab-local variable
-`t:tab_label`
+By default, the tab name is derived from the active buffer in that tab. You can set a custom prefix on the tab by setting the tab-local variable `t:tab_label`.
 
-A simple command to change the label is 
+A simple command to change the label is:
 
 ```vim
 command! -nargs=* Tablabel let t:tab_label=<q-args> | redrawtabline
@@ -71,9 +70,9 @@ command! -nargs=* Tablabel let t:tab_label=<q-args> | redrawtabline
 
 ### Tip: accessing tabs with keymaps
 
-A simple vimscript can be used to configure keymaps to select tabs.
+A simple Vimscript can be used to configure keymaps to select tabs.
 
-For example, the script below enables `Number + ,` to select a tab, i.e. you can type `1,` to select the first tab.
+For example, the script below enables `Number + ,` to select a tab (e.g., you can type `1,` to select the first tab):
 
 ```vim
 for i in range(1, 9)
